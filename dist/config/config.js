@@ -1,56 +1,30 @@
-// config.ts
-import dotenv from "dotenv";
-dotenv.config();
-/**
- * config
- * - Small, friendly place to read settings from environment variables (.env).
- * - Think of these as the app's instruction sheet: ports, secrets, database addresses, etc.
- */
-export const config = {
-    // Where the server listens (port + host)
-    port: Number(process.env.PORT || 8443), // default 8443 if not set
-    host: process.env.HOST || "0.0.0.0",
-    // TLS files for HTTPS. If empty, the server will run plain HTTP (not safe for real apps).
-    tls: {
-        cert: process.env.TLS_CERT_PATH || "", // path to TLS certificate file
-        key: process.env.TLS_KEY_PATH || "", // path to TLS private key file
-    },
-    // JWT (login token) settings
-    jwtSecret: process.env.JWT_SECRET || "dev-secret", // keep secret in production!
-    jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d", // how long tokens last
-    // Database addresses (put your real URLs in env variables)
-    databaseUrl: process.env.DATABASE_URL || "",
-    mongoUri: process.env.MONGO_URI || "",
-    // AWS keys for S3 (keep these secret)
-    aws: {
-        region: process.env.AWS_REGION || undefined,
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || undefined,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || undefined,
-    },
-    // mediasoup settings. Router codecs can be provided as a JSON string in env.
-    mediasoup: {
-        workerMaxHeap: Number(process.env.MEDIASOUP_WORKER_MAX_HEAP || 200),
-        routerMediaCodecs: (() => {
-            // Try to parse MEDIA CODECS from env. If it fails, fall back to a safe default.
-            const fallback = [
-                { kind: "audio", mimeType: "audio/opus", clockRate: 48000, channels: 2 },
-            ];
-            try {
-                const raw = process.env.MEDIASOUP_ROUTER_MEDIA_CODECS;
-                if (!raw)
-                    return fallback;
-                return JSON.parse(raw);
-            }
-            catch {
-                // If the JSON is broken, use the fallback so the app still runs.
-                return fallback;
-            }
-        })(),
-    },
-    // Optional TURN server info for better WebRTC connectivity (leave empty if not using)
-    turn: {
-        url: process.env.TURN_URL || undefined,
-        username: process.env.TURN_USERNAME || undefined,
-        password: process.env.TURN_PASSWORD || undefined,
-    },
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.config = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+exports.config = {
+    port: process.env.PORT || 3000,
+    appUrl: process.env.APP_URL || 'http://localhost:3000',
+    jwtSecret: process.env.JWT_SECRET || 'please-change',
+    databaseUrl: process.env.DATABASE_URL,
+    redisUrl: process.env.REDIS_URL,
+    auth0: {
+        clientId: process.env.AUTH0_CLIENT_ID,
+        clientSecret: process.env.AUTH0_CLIENT_SECRET,
+        issuerBaseUrl: process.env.AUTH0_ISSUER_BASE_URL,
+        baseUrl: process.env.AUTH0_BASE_URL || 'http://localhost:3000',
+    },
+    aws: {
+        region: process.env.AWS_REGION,
+        s3Bucket: process.env.S3_BUCKET,
+    },
+    mediasoup: {
+        minWorkers: Number(process.env.MEDIASOUP_WORKER_MIN || 1),
+        maxWorkers: Number(process.env.MEDIASOUP_WORKER_MAX || 2),
+    }
+};
+exports.default = exports.config;

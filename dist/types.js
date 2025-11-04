@@ -1,2 +1,1 @@
-// ws-types.ts
-export {};
+"use strict";

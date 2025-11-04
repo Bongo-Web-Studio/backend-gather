@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "";
 export function registerAuthRoutes(app: Express) {
   // SIGNUP
   // Creates a new user
-  app.post("/api/v1/signup", async function (req: Request, res: Response) {
+  app.post("/signup", async function (req: Request, res: Response) {
     try {
       const { email, password, username } = req.body;
 
@@ -50,7 +50,7 @@ export function registerAuthRoutes(app: Express) {
 
   // --- LOGIN ---
   // Authenticates a user and returns a token
-  app.post("/api/v1/login", async (req: Request, res: Response) => {
+  app.post("/login", async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body;
 
@@ -81,7 +81,7 @@ export function registerAuthRoutes(app: Express) {
 
   // --- GET ME ---
   // Fetch authenticated user's info
-  app.get("/api/v1/me", async (req: Request, res: Response) => {
+  app.get("/me", async (req: Request, res: Response) => {
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader?.startsWith("Bearer "))
