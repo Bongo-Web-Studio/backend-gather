@@ -1,1 +1,1 @@
-{"root":["./src/app.ts","./src/auth.ts","./src/db.ts","./src/index.ts","./src/logger.ts","./src/mediasoupworker.ts","./src/prisma.ts","./src/roommanager.ts","./src/s3.ts","./src/server.ts","./src/types.ts","./src/wshandler.ts","./src/config/config.ts","./src/controllers/auth.controller.ts","./src/controllers/rooms.controller.ts","./src/middleware/auth.middleware.ts","./src/routes/auth.route.ts","./src/routes/rooms.ts"],"version":"5.9.3"}
+{"root":["./src/index.ts"],"version":"5.9.2"}
